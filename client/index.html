@@ -1,0 +1,103 @@
+<canvas id="context" width="800" height="450"></canvas>
+
+<style type="text/css">
+    #context {
+        background: #1D256D;
+    }
+
+    html, body {
+        height: 100%;
+    }
+
+    html {
+        display: table;
+        margin: auto;
+    }
+
+    body {
+        display: table-cell;
+        vertical-align: middle;
+    }
+</style>
+
+<script type="text/javascript" src="../client/creature.js"></script>
+<script type="text/javascript" src="../client/human.js"></script>
+<script type="text/javascript" src="../client/map.js"></script>
+<script type="text/javascript" src="../client/screen.js"></script>
+<script type="text/javascript" src="../client/weapon.js"></script>
+<script type="text/javascript" src="../client/bullet.js"></script>
+<script type="text/javascript" src="../client/bullets.js"></script>
+
+<script>
+    var canvas = document.getElementById("context");
+    var context = canvas.getContext("2d");
+
+    var map = new Map(3, 3, context);
+    var player = new Human(32, 48, 1, map, context);
+    var screen = new Screen(player, map);
+    var bullets = new Bullets(map, context);
+    let key = {shot:false};
+
+    initialize();
+
+    function initialize() {
+        context.imageSmoothingEnabled = false;
+
+        main();
+    }
+
+    function main() {
+        context.clearRect(0, 0, 800, 450);
+
+        player.update();
+        screen.update(player);
+        bullets.update();
+
+        map.print(screen);
+        player.print(screen);
+        player.printSnipe(screen);
+        bullets.print(screen);
+
+        setTimeout(main, 30);
+    }
+
+    document.onkeydown = function (event) {
+        if(event.keyCode === 39)
+            player.isRightPress = true;
+        if(event.keyCode === 40)
+            player.isDownPress = true;
+        if(event.keyCode === 37)
+            player.isLeftPress = true;
+        if(event.keyCode === 38)
+            player.isUpPress = true;
+        if(event.keyCode === 90)
+            player.isJumpPress = true;
+        if(event.keyCode === 88 && !key.shot) {
+            player.isShotPress = true;
+            key.shot = true;
+        }
+        //if (event.keyCode === 32)
+        //    socket.emit('keyPress', { inputId: 'jump', isPress: true });
+    }
+    document.onkeyup = function (event) {
+        if(event.keyCode === 39)
+            player.isRightPress = false;
+        if(event.keyCode === 40)
+            player.isDownPress = false;
+        if(event.keyCode === 37)
+            player.isLeftPress = false;
+        if(event.keyCode === 38)
+            player.isUpPress = false;
+        if(event.keyCode === 90)
+            player.isJumpPress = false;
+        if(event.keyCode === 88) {
+            player.isShotPress = false;
+            key.shot = false;
+        }
+        /*
+        if (event.keyCode === 65)
+            socket.emit('keyPress', { inputId: 'clear', isPress: true });
+        if (event.keyCode === 82)
+            socket.emit('restart');*/
+    }
+</script>
