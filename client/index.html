@@ -32,6 +32,9 @@
     var canvas = document.getElementById("context");
     var context = canvas.getContext("2d");
 
+    var FPS = 60, FRAME_INTERVAL = 1000 / FPS;
+    var lastTimestamp = 0;
+
     var map = new Map(3, 3, context);
     var player = new Human(32, 48, 1, map, context);
     var screen = new Screen(player, map);
@@ -43,10 +46,14 @@
     function initialize() {
         context.imageSmoothingEnabled = false;
 
-        main();
+        window.requestAnimationFrame(main);
     }
 
-    function main() {
+    function main(timestamp) {
+        window.requestAnimationFrame(main);
+		if (timestamp - lastTimestamp < FRAME_INTERVAL) return;
+    	lastTimestamp = timestamp;
+
         context.clearRect(0, 0, 800, 450);
 
         player.update();
@@ -57,8 +64,6 @@
         player.print(screen);
         player.printSnipe(screen);
         bullets.print(screen);
-
-        setTimeout(main, 30);
     }
 
     document.onkeydown = function (event) {
