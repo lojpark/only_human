@@ -13,8 +13,13 @@ class Bullets{
     update() {
         let i;
 
-        for (i = 0; i < this.bullets.length; i++) {
+        for (i = this.bullets.length - 1; i >= 0; i--) {
             this.bullets[i].update();
+
+            // Remove dead bullet
+            if (!this.bullets[i].isAlive) {
+                this.bullets.splice(i, 1);
+            }
         }
     }
 

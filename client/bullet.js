@@ -7,12 +7,24 @@ class Bullet {
         this.h = 5;
         this.angle = angle;
         this.speed = 25;
+        this.isAlive = true;
 
         this.map = map;
         this.context = context;
 
         this.image = new Image();
         this.image.src = "../client/image/bullet.png";
+    }
+
+    checkObstacle() {
+        let x = this.map.modular(Math.floor(this.x / 30), "COL");
+        let y = this.map.modular(Math.floor(this.y / 30), "ROW");
+
+        // When touch obstacles
+        if (this.map.map[y][x] == 1)
+            return true;
+
+        return false;
     }
 
     update() {
@@ -24,6 +36,11 @@ class Bullet {
         // Modular
         this.x = this.map.modular(this.x, "WIDTH");
         this.y = this.map.modular(this.y, "HEIGHT");
+
+        // When touch obstacles
+        if (this.checkObstacle()) {
+            this.isAlive = false;
+        }
     }
 
     print(screen) {

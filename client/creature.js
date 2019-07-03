@@ -67,7 +67,7 @@ class Creature {
         var uy = this.map.modular(Math.floor((this.y - 12) / 30), "ROW");
         var dy = this.map.modular(Math.floor((this.y + 18) / 30), "ROW");
 
-        // When touch obstacle
+        // When touch obstacles
         if (this.map.map[uy][lx] == 1 || this.map.map[dy][lx] == 1)
             this.x = lx * 30 + 42;
         if (this.map.map[uy][rx] == 1 || this.map.map[dy][rx] == 1)
