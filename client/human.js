@@ -4,6 +4,7 @@ class Human extends Creature {
 
         this.snipeX = this.snipeY = 0;
         this.snipeVx = this.snipeVy = 0;
+        this.snipeRange = 600;
 
         this.isUpPress = false;
         this.isDownPress = false;
@@ -225,17 +226,16 @@ class Human extends Creature {
         /* 조준점 */
         context.drawImage(this.snipeImage, 0, 0, 32, 32, this.snipeX - 16 - screen.x, this.snipeY - 16 - screen.y, 32, 32);
 
-        let range = 600;
         /* 조준원 */
         context.fillStyle = "rgba(0, 255, 0, 0.05)";
         context.beginPath();
-        context.arc(this.x - screen.x, this.y - screen.y, range, 0, Math.PI * 2, false);
+        context.arc(this.x - screen.x, this.y - screen.y, this.snipeRange, 0, Math.PI * 2, false);
         context.closePath();
         context.fill();
 
         /* 조준원 테두리 */
         context.strokeStyle = "rgb(0, 255, 0)";
-        for (; range >= 100; range -= 200) {
+        for (let range = this.snipeRange; range >= 100; range -= 200) {
             context.beginPath();
             context.arc(this.x - screen.x, this.y - screen.y, range, 0, Math.PI * 2, false);
             context.closePath();
