@@ -67,7 +67,7 @@ class Human extends Creature {
                     }
                 }
             }
-            bullets.addBullet(this.x, this.y, minAngle);
+            bullets.addBullet(this.x, this.y, minAngle, this.snipeRange);
 
             this.state = "IDLE";
             this.isShotPress = false;
@@ -77,7 +77,7 @@ class Human extends Creature {
     update() {
         this.gravity();
 
-        /* 저격 중 */
+        /* Sniping */
         if (this.state == "SNIPE") {
             this.snipe();
             return;
@@ -214,7 +214,7 @@ class Human extends Creature {
                 this.snipeVx = this.snipeVy = 0;
             }
             else {
-                bullets.addBullet(this.x, this.y, this.fireAngle);
+                bullets.addBullet(this.x, this.y, this.fireAngle, this.snipeRange);
             }
             this.isShotPress = false;
         }
