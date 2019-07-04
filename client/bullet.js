@@ -15,7 +15,7 @@ class Bullet {
         this.context = context;
 
         this.image = new Image();
-        this.image.src = "../client/image/bullet.png";
+        this.image.src = "client/image/bullet.png";
     }
 
     checkObstacle() {

@@ -15,7 +15,7 @@ class Human extends Creature {
         this.isSnipe = false;
 
         this.snipeImage = new Image();
-        this.snipeImage.src = "../client/image/snipe.png";
+        this.snipeImage.src = "client/image/snipe.png";
     }
 
     distance(x1, y1, x2, y2) {

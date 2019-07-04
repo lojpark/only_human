@@ -22,7 +22,7 @@ class Creature {
         this.weapon = new Weapon(context);
 
         this.image = new Image();
-        this.image.src = "../client/image/player.png";
+        this.image.src = "client/image/player.png";
     }
 
     jump() {

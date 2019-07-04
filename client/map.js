@@ -3,7 +3,7 @@ class Map {
         this.width = width;
         this.height = height;
         this.image = new Image();
-        this.image.src = "../client/image/tile.png";
+        this.image.src = "client/image/tile.png";
         this.context = context;
 
         let i, j;

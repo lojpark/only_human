@@ -3,7 +3,7 @@ class Weapon{
         this.context = context;
 
         this.image = new Image();
-        this.image.src = "../client/image/weapon.png";
+        this.image.src = "client/image/weapon.png";
     }
 
     print(x, y, state, mRun, mUp, mDown) {
