@@ -1,0 +1,23 @@
+{
+  "name": "only_human",
+  "version": "1.0.0",
+  "description": "Be the only human.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lojpark/only_human.git"
+  },
+  "author": "lojpark",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lojpark/only_human/issues"
+  },
+  "homepage": "https://github.com/lojpark/only_human#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.2.0"
+  }
+}
