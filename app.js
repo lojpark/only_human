@@ -15,8 +15,8 @@ console.log("port: 2000 open");
 var SOCKET_LIST = {};
 
 const Map = require('./server/map.js');
-const Player = require('./server/Human.js');
-const Bullets = require('./server/Bullets.js');
+const Player = require('./server/human.js');
+const Bullets = require('./server/bullets.js');
 var map = new Map(3, 3);
 var bullets = new Bullets(map);
 var players = new Object();
