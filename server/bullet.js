@@ -1,5 +1,5 @@
 class Bullet {
-    constructor(x, y, angle, range, map, context) {
+    constructor(x, y, angle, range, map) {
         this.x = this.ox = x;
         this.y = this.oy = y;
         this.vy = 0;
@@ -12,10 +12,6 @@ class Bullet {
         this.isAlive = true;
 
         this.map = map;
-        this.context = context;
-
-        this.image = new Image();
-        this.image.src = "client/image/bullet.png";
     }
 
     checkObstacle() {
@@ -59,22 +55,6 @@ class Bullet {
             this.isAlive = false;
         }
     }
-
-    print(screen) {
-        const ox = Math.floor(this.x - screen.x - this.w / 2);
-        const oy = Math.floor(this.y - screen.y - this.h / 2);
-        const delta = [-1, 0, 1];
-        let i, j;
-
-        // Print image
-        for (i = 0; i < 3; i++) {
-            for (j = 0; j < 3; j++) {
-                const x = ox + delta[i] * screen.MAP_WIDTH;
-                const y = oy + delta[j] * screen.MAP_HEIGHT;
-
-                if (x < -3 || y < -3 || x > screen.SCREEN_WIDTH + 3 || y > screen.SCREEN_HEIGHT + 3) continue;
-                context.drawImage(this.image, 0, 0, this.w, this.h, x, y, this.w, this.h);
-            }
-        }
-    }
 }
+
+module.exports = Bullet;

@@ -11,7 +11,6 @@ class Human extends Creature {
         this.isLeftPress = false;
         this.isRightPress = false;
         this.isJumpPress = false;
-        this.isShotPress = false;
         this.isSnipe = false;
 
         this.snipeImage = new Image();
@@ -52,10 +51,22 @@ class Human extends Creature {
         // Set player's direction
         if (this.snipeX < this.x) this.dir = "LEFT";
         else if (this.snipeX > this.x) this.dir = "RIGHT";
+    }
 
+    shot() {
         // Shot
-        if (this.isShotPress) {
-            let angle, dist, minAngle = 0, minError = 65536;
+        if (this.state == "SIT") {
+            this.state = "SNIPE";
+            this.snipeX = this.x;
+            this.snipeY = this.y;
+            this.snipeVx = this.snipeVy = 0;
+        }
+        else if (this.state == "SNIPE") {
+            this.state = "IDLE";
+            
+            let angle, dist, minError = 65536;
+            this.fireAngle = 0;
+
             for (angle = 0; angle < 360; angle++) {
                 for (dist = 0; dist < 600; dist += 25) {
                     let destX = this.x + dist * Math.cos(angle * 3.14 / 180);
@@ -63,177 +74,35 @@ class Human extends Creature {
                     let error = this.distance(this.snipeX, this.snipeY, destX, destY);
                     if (minError > error) {
                         minError = error;
-                        minAngle = angle;
+                        this.fireAngle = angle;
                     }
                 }
             }
-            bullets.addBullet(this.x, this.y, minAngle, this.snipeRange);
-
-            this.state = "IDLE";
-            this.isShotPress = false;
         }
     }
 
     update() {
-        this.gravity();
-
-        /* Sniping */
+        // Sniping
         if (this.state == "SNIPE") {
             this.snipe();
             return;
-        }
-
-        let dx = 0, dy = 0;
-
-        // Make state IDLE
-        if (this.state == "RUN") this.state = "IDLE";
-
-        // Move Right or Left
-        if (this.isRightPress && this.state != "SIT") {
-            dx += this.speed;
-            if (this.dir == "LEFT") this.fireAngle = 180 - this.fireAngle;
-            this.dir = "RIGHT";
-            if (this.state != "JUMP") this.state = "RUN";
-        }
-        if (this.isLeftPress && this.state != "SIT") {
-            dx -= this.speed;
-            if (this.dir == "RIGHT") this.fireAngle = 180 - this.fireAngle;
-            this.dir = "LEFT";
-            if (this.state != "JUMP") this.state = "RUN";
-        }
-
-        // Aim up
-        if (this.isUpPress) {
-            // Change motion from bottom if it is shooting down
-            if (this.motionDown > 0) {
-                this.motionDown -= 0.5;
-                if (this.motionDown < 0) this.motionDown = 0;
-            }
-            // Change motion to top
-            else {
-                this.motionUp += 0.5;
-                if (this.motionUp >= 4) this.motionUp = 3;
-            }
-            // Left direction angle
-            if (this.dir == "LEFT") {
-                this.fireAngle += 8;
-                if (this.fireAngle > 270) this.fireAngle = 270;
-            }
-            // Right direction angle
-            else {
-                this.fireAngle -= 8;
-                if (this.fireAngle <= - 90) this.fireAngle = -90;
-            }
-        }
-
-        // Aim down
-        if (this.isDownPress) {
-            // Can only shooting down during jump
-            if (this.state == "JUMP") {
-                // Change motion from top if it is shooting up
-                if (this.motionUp > 0) {
-                    this.motionUp -= 1;//0.5;
-                    if (this.motionUp < 0) this.motionUp = 0;
-                }
-                // Change motion to bottom
-                else {
-                    this.motionDown += 1;//0.5;
-                    if (this.motionDown >= 4) this.motionDown = 3;
-                }
-
-                // Left direction angle
-                if (this.dir == "LEFT") {
-                    this.fireAngle -= 15;
-                    if (this.fireAngle <= 90) this.fireAngle = 90;
-                }
-                // Right direction angle
-                else {
-                    this.fireAngle += 15;
-                    if (this.fireAngle >= 90) this.fireAngle = 90;
-                }
-            }
-            // Sit
-            else {
-                this.state = "SIT";
-            }
-        }
-        // Make state IDLE
-        else if (this.state == "SIT") this.state = "IDLE";
-
-        // Aim middle
-        if (!this.isUpPress && (!this.isDownPress || this.state == "SIT")) {
-            // Left direction angle
-            if (this.dir == "LEFT") {
-                if (this.fireAngle > 180) {
-                    this.fireAngle -= 15;
-                    if (this.fireAngle <= 180) this.fireAngle = 180;
-                }
-                else {
-                    this.fireAngle += 8;
-                    if (this.fireAngle >= 180) this.fireAngle = 180;
-                }
-            }
-            // Rigt direction angle
-            else {
-                if (this.fireAngle < 0) {
-                    this.fireAngle += 15;
-                    if (this.fireAngle >= 0) this.fireAngle = 0;
-                }
-                else {
-                    this.fireAngle -= 8;
-                    if (this.fireAngle <= 0) this.fireAngle = 0;
-                }
-            }
-            // Change motion to middle
-            this.motionUp -= 0.5;
-            if (this.motionUp < 0) this.motionUp = 0;
-            this.motionDown -= 0.5;
-            if (this.motionDown < 0) this.motionDown = 0;
-        }
-
-        // Change running motion
-        this.runMotion();
-
-        // Jump
-        if (this.isJumpPress && this.state != "JUMP") {
-            this.jump();
-        }
-
-        // Move position
-        this.x = this.map.modular(this.x + dx, "WIDTH");
-        this.y = this.map.modular(this.y + dy, "HEIGHT");
-
-        // Check obstacle
-        this.checkObstacle();
-
-        if (this.isShotPress) {
-            if (this.state == "SIT") {
-                this.state = "SNIPE";
-                this.snipeX = this.x;
-                this.snipeY = this.y;
-                this.snipeVx = this.snipeVy = 0;
-            }
-            else {
-                bullets.addBullet(this.x, this.y, this.fireAngle, this.snipeRange);
-            }
-            this.isShotPress = false;
         }
     }
 
     printSnipe(screen) {
         if (this.state != "SNIPE") return;
 
-        /* 조준점 */
+        // Aiming point
         context.drawImage(this.snipeImage, 0, 0, 32, 32, this.snipeX - 16 - screen.x, this.snipeY - 16 - screen.y, 32, 32);
 
-        /* 조준원 */
+        // Aiming circle
         context.fillStyle = "rgba(0, 255, 0, 0.05)";
         context.beginPath();
         context.arc(this.x - screen.x, this.y - screen.y, this.snipeRange, 0, Math.PI * 2, false);
         context.closePath();
         context.fill();
 
-        /* 조준원 테두리 */
+        // Aiming circle border
         context.strokeStyle = "rgb(0, 255, 0)";
         for (let range = this.snipeRange; range >= 100; range -= 200) {
             context.beginPath();

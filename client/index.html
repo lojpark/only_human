@@ -1,0 +1,195 @@
+<canvas id="context" width="800" height="450"></canvas>
+
+<style type="text/css">
+    #context {
+        background: #1D256D;
+    }
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    html {
+        display: table;
+        margin: auto;
+    }
+
+    body {
+        display: table-cell;
+        vertical-align: middle;
+    }
+</style>
+
+<script type="text/javascript" src="client/creature.js"></script>
+<script type="text/javascript" src="client/human.js"></script>
+<script type="text/javascript" src="client/map.js"></script>
+<script type="text/javascript" src="client/screen.js"></script>
+<script type="text/javascript" src="client/weapon.js"></script>
+<script type="text/javascript" src="client/bullets.js"></script>
+
+<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+<script>
+    var socket = io();
+
+    var canvas = document.getElementById("context");
+    var context = canvas.getContext("2d");
+
+    var FPS = 60, FRAME_INTERVAL = 1000 / FPS;
+    var lastTimestamp = 0;
+
+    var map;
+    let players = {};
+    var screen;
+    var bullets;
+    let key = { shot: false };
+
+    var socketId = 0;
+
+    socket.on("NEW_POSITION", function (data) {
+        // update player
+        for (let i = 0; i < data.player.length; i++) {
+            if (players[data.player[i].id] == null) {
+                players[data.player[i].id] = new Human(data.player[i].x, data.player[i].y, 1, map, context);
+            }
+            else {
+                players[data.player[i].id].x = data.player[i].x;
+                players[data.player[i].id].y = data.player[i].y;
+                players[data.player[i].id].dir = data.player[i].dir;
+                players[data.player[i].id].state = data.player[i].state;
+                players[data.player[i].id].motion = data.player[i].motion;
+            }
+
+            players[data.player[i].id].update();
+        }
+
+        context.clearRect(0, 0, 800, 450);
+
+        players[socketId].update();
+        screen.update(players[socketId]);
+        bullets.update(data.bullet);
+
+        map.print(screen);
+        players[socketId].print(screen);
+        for (i in players.list) {
+            players[i].print(screen);
+        }
+        players[socketId].printSnipe(screen);
+        bullets.print(screen);
+    });
+
+    socket.on("INIT_GAME", function(id, player, tmpMap) {
+        // Initialize the socket id
+        socketId = id;
+
+        // Initialize the context setting
+        context.imageSmoothingEnabled = false;
+
+        // Initialize the map
+        map = new Map(3, 3, tmpMap, context);
+
+        // Initialize the player
+        players[socketId] = new Human(player.x, player.y, 1, map, context);
+
+        bullets = new Bullets(map, context);
+
+        // Initialize the screen
+        screen = new Screen(players[socketId], map);
+    });
+
+    socket.on("REMOVE_PERSON", function(data) {
+        delete players[data];
+    });
+
+    document.onkeydown = function (event) {
+        if (players[socketId] == null) {
+            return;
+        }
+
+        if (event.keyCode === 38) {
+            players[socketId].isUpPress = true;
+        }
+        if (event.keyCode === 40) {
+            players[socketId].isDownPress = true;
+        }
+        if (event.keyCode === 37) {
+            players[socketId].isLeftPress = true;
+        }
+        if (event.keyCode === 39) {
+            players[socketId].isRightPress = true;
+        }
+        if (event.keyCode === 90) {
+            players[socketId].isJumpPress = true;
+        }
+
+        if (players[socketId].state != "SNIPE") {
+            if (event.keyCode === 38) {
+                socket.emit("KEY_PRESS", {inputId:"UP", isPress: true});
+            }
+            if (event.keyCode === 40) {
+                socket.emit("KEY_PRESS", {inputId:"DOWN", isPress: true});
+            }
+            if (event.keyCode === 37) {
+                socket.emit("KEY_PRESS", {inputId:"LEFT", isPress: true});
+            }
+            if (event.keyCode === 39) {
+                socket.emit("KEY_PRESS", {inputId:"RIGHT", isPress: true});
+            }
+            if (event.keyCode === 90) {
+                socket.emit("KEY_PRESS", {inputId:"JUMP", isPress: true});
+            }
+        }
+        
+        if (event.keyCode === 88 && !key.shot) {
+            key.shot = true;
+
+            players[socketId].shot();
+
+            if (players[socketId].state == "SNIPE") {
+                socket.emit("KEY_PRESS", {inputId:"SNIPE"});
+            }
+            else {
+                socket.emit("KEY_PRESS", {inputId:"SHOT", angle: players[socketId].fireAngle});
+            }
+        }
+    }
+    document.onkeyup = function (event) {
+        if (players[socketId] == null) {
+            return;
+        }
+
+        if (event.keyCode === 39)
+            players[socketId].isRightPress = false;
+        if (event.keyCode === 40)
+            players[socketId].isDownPress = false;
+        if (event.keyCode === 37)
+            players[socketId].isLeftPress = false;
+        if (event.keyCode === 38)
+            players[socketId].isUpPress = false;
+        if (event.keyCode === 90)
+            players[socketId].isJumpPress = false;
+        if (event.keyCode === 88) {
+            players[socketId].isShotPress = false;
+            key.shot = false;
+        }
+
+        if (players[socketId].state != "SNIPE") {
+            if (event.keyCode === 38) {
+                socket.emit("KEY_PRESS", {inputId:"UP", isPress: false});
+            }
+            if (event.keyCode === 40) {
+                socket.emit("KEY_PRESS", {inputId:"DOWN", isPress: false});
+            }
+            if (event.keyCode === 37) {
+                socket.emit("KEY_PRESS", {inputId:"LEFT", isPress: false});
+            }
+            if (event.keyCode === 39) {
+                socket.emit("KEY_PRESS", {inputId:"RIGHT", isPress: false});
+            }
+            if (event.keyCode === 90) {
+                socket.emit("KEY_PRESS", {inputId:"JUMP", isPress: false});
+            }
+        }
+    }
+</script>
