@@ -48,7 +48,23 @@
     var socketId = 0;
 
     socket.on("NEW_POSITION", function (data) {
-        // update player
+        // Remove unremoved players
+        if (players.length > data.player.length) {
+            for (let id in players) {
+                let isExist = false;
+                for (let j = 0; j < data.player.length; j++) {
+                    if (id == data.player[j].id) {
+                        isExist = true;
+                        break;
+                    }
+                }
+                if (!isExist) {
+                    delete players[id];
+                }
+            }
+        }
+
+        // Update players
         for (let i = 0; i < data.player.length; i++) {
             if (players[data.player[i].id] == null) {
                 players[data.player[i].id] = new Human(data.player[i].x, data.player[i].y, 1, map, context);
@@ -69,8 +85,9 @@
         screen.update(players[socketId]);
         bullets.update(data.bullet);
 
+        // Print screen
         map.print(screen);
-        for (i in players) {
+        for (let i in players) {
             players[i].print(screen);
         }
         players[socketId].printSnipe(screen);
