@@ -6,8 +6,8 @@ class Robot extends Creature {
     }
 
     update() {
-        this.gravity();
-
+        super();
+        
         let dx = 0, dy = 0;
 
         // Make state IDLE

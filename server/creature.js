@@ -79,6 +79,10 @@ class Creature {
         }
         else this.motion.run = 0;
     }
+
+    update() {
+        this.gravity();
+    }
 }
 
 module.exports = Creature;
