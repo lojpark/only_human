@@ -3,11 +3,13 @@ const Creature = require ('../server/creature.js');
 class Robot extends Creature {
     constructor(x, y, type, map) {
         super(x, y, type, map);
+
+        this.id = Math.random();
     }
 
     update() {
-        super();
-        
+        super.update();
+
         let dx = 0, dy = 0;
 
         // Make state IDLE

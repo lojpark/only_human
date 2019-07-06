@@ -23,6 +23,8 @@
 
 <script type="text/javascript" src="client/creature.js"></script>
 <script type="text/javascript" src="client/human.js"></script>
+<script type="text/javascript" src="client/robot.js"></script>
+<script type="text/javascript" src="client/robots.js"></script>
 <script type="text/javascript" src="client/map.js"></script>
 <script type="text/javascript" src="client/screen.js"></script>
 <script type="text/javascript" src="client/weapon.js"></script>
@@ -42,6 +44,7 @@
     var map;
     let players = {};
     var screen;
+    var robots;
     var bullets;
     let key = { shot: false };
 
@@ -83,6 +86,7 @@
         context.clearRect(0, 0, 800, 450);
 
         screen.update(players[socketId]);
+        robots.update(data.robot);
         bullets.update(data.bullet);
 
         // Print screen
@@ -91,6 +95,7 @@
             players[i].print(screen);
         }
         players[socketId].printSnipe(screen);
+        robots.print(screen);
         bullets.print(screen);
     });
 
@@ -107,6 +112,10 @@
         // Initialize the player
         players[socketId] = new Human(player.x, player.y, 1, map, context);
 
+        // Initialize the robots
+        robots = new Robots(map, context);
+
+        // Initialize the bullets
         bullets = new Bullets(map, context);
 
         // Initialize the screen

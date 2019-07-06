@@ -32,6 +32,7 @@ class Robots {
                 pack.push({
                     x: this.robots[i].x,
                     y: this.robots[i].y,
+                    id: this.robots[i].id,
                     dir: this.robots[i].dir,
                     state: this.robots[i].state,
                     motion: this.robots[i].motion,

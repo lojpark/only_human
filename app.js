@@ -16,7 +16,7 @@ var SOCKET_LIST = {};
 
 const Map = require('./server/map.js');
 const Player = require('./server/human.js');
-const Robots = require('./serber/robots.js');
+const Robots = require('./server/robots.js');
 const Bullets = require('./server/bullets.js');
 var map = new Map(3, 3);
 var players = new Object();

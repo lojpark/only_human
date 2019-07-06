@@ -19,8 +19,8 @@ class Human extends Creature {
     }
 
     update() {
-        super();
-        
+        super.update();
+
         // Stop moving when player is sniping
         if (this.state == "SNIPE") {
             return;
