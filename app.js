@@ -16,10 +16,14 @@ var SOCKET_LIST = {};
 
 const Map = require('./server/map.js');
 const Player = require('./server/human.js');
+const Robots = require('./serber/robots.js');
 const Bullets = require('./server/bullets.js');
 var map = new Map(3, 3);
-var bullets = new Bullets(map);
 var players = new Object();
+var robots = new Robots(map);
+var bullets = new Bullets(map);
+
+robots.spawnRobots(10);
 
 players.list = {};
 
@@ -110,6 +114,7 @@ io.sockets.on('connection', function (socket) {
 setInterval(function () {
     let pack = {
         player: players.update(),
+        robot: robots.update(),
         bullet: bullets.update(),
     }
 
