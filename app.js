@@ -26,7 +26,7 @@ players.list = {};
 players.onConnect = function (socket) {
     let player = new Player(socket.id, 32, 48, 1, map);
     players.list[socket.id] = player;
-    console.log("new player:", socket.id);
+    console.log("player in:", socket.id);
 
     socket.on("KEY_PRESS", function (data) {
         if (data.inputId === "UP") {
@@ -68,6 +68,7 @@ players.onConnect = function (socket) {
 }
 
 players.onDisconnect = function (socket) {
+    console.log("player out:", socket.id);
     delete players.list[socket.id];
 }
 
