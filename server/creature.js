@@ -1,12 +1,13 @@
 class Creature {
     constructor(x, y, type, map) {
-        this.x = x;
-        this.y = y;
+        this.w = 32;
+        this.h = 48;
         this.type = type;
         this.map = map;
 
-        this.w = 32;
-        this.h = 48;
+        this.x = x;
+        this.y = y;
+        this.isAlive = true;
         this.vy = 0;
         this.vx = 0;
         this.dir = "RIGHT";
