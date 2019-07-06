@@ -66,13 +66,11 @@
 
         context.clearRect(0, 0, 800, 450);
 
-        players[socketId].update();
         screen.update(players[socketId]);
         bullets.update(data.bullet);
 
         map.print(screen);
-        players[socketId].print(screen);
-        for (i in players.list) {
+        for (i in players) {
             players[i].print(screen);
         }
         players[socketId].printSnipe(screen);

@@ -26,6 +26,7 @@ players.list = {};
 players.onConnect = function (socket) {
     let player = new Player(socket.id, 32, 48, 1, map);
     players.list[socket.id] = player;
+    console.log("new player:", socket.id);
 
     socket.on("KEY_PRESS", function (data) {
         if (data.inputId === "UP") {
