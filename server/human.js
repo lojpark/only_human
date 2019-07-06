@@ -5,6 +5,8 @@ class Human extends Creature {
         super(x, y, type, map);
 
         this.id = id;
+
+        this.snipeRange = 600;
     }
 }
 

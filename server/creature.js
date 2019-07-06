@@ -31,6 +31,7 @@ class Creature {
     jump() {
         this.vy = -15;
         this.state = "JUMP";
+        this.isJumpPress = false;
     }
 
     gravity() {

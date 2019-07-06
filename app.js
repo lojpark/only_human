@@ -15,7 +15,7 @@ console.log("port: 2000 open");
 var SOCKET_LIST = {};
 
 const Map = require('./server/map.js');
-const Player = require('./server/human.js');
+const Human = require('./server/human.js');
 const Robots = require('./server/robots.js');
 const Bullets = require('./server/bullets.js');
 var map = new Map(3, 3);
@@ -23,12 +23,12 @@ var players = new Object();
 var robots = new Robots(map);
 var bullets = new Bullets(map);
 
-robots.spawnRobots(10);
+robots.spawnRobots(100);
 
 players.list = {};
 
 players.onConnect = function (socket) {
-    let player = new Player(socket.id, 32, 48, 1, map);
+    let player = new Human(socket.id, 32, 48, 1, map);
     players.list[socket.id] = player;
     console.log("player in:", socket.id);
 

@@ -5,10 +5,31 @@ class Robot extends Creature {
         super(x, y, type, map);
 
         this.id = Math.random();
+
+        this.action = 0;
+        this.timer = 0;
     }
 
     ai() {
-        this.isRightPress = true;
+        if (this.action == 1) {
+            this.isLeftPress = true;
+        }
+        else if (this.action == 2) {
+            this.isRightPress = true;
+        }
+
+        if (Math.random() < 0.01) {
+            this.isJumpPress = true;
+        }
+
+        this.timer--;
+
+        if (this.timer <= 0) {
+            this.timer = Math.floor(Math.random() * 100);
+            this.action = Math.floor(Math.random() * 3);
+
+            this.isLeftPress = this.isRightPress = false;
+        }
     }
 
     update() {
