@@ -6,7 +6,7 @@ class Bullet {
         this.w = 5;
         this.h = 5;
         this.angle = angle;
-        this.speed = 25;
+        this.speed = 20;
         this.range = 0;
         this.maxRange = range;
         this.isAlive = true;
@@ -36,7 +36,7 @@ class Bullet {
         // Move position
         this.x += dx;
         this.y += dy;
-        if (dy < 25) this.vy += 0.5;
+        if (dy < 20) this.vy += 0.5;
 
         // Modular
         this.x = this.map.modular(this.x, "WIDTH");

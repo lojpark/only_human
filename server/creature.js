@@ -12,7 +12,7 @@ class Creature {
         this.vx = 0;
         this.dir = "RIGHT";
         this.state = "IDLE";
-        this.speed = 6;
+        this.speed = 3;
         this.fireAngle = 0;
 
         this.motion = new Object();
@@ -29,14 +29,14 @@ class Creature {
     }
 
     jump() {
-        this.vy = -15;
+        this.vy = -11;
         this.state = "JUMP";
         this.isJumpPress = false;
     }
 
     gravity() {
         // Accelerate the gravity
-        if (this.vy < 20) this.vy += 1.5;
+        if (this.vy < 14) this.vy += 0.7;
         // Change y position
         this.y += this.vy;
 
@@ -82,7 +82,7 @@ class Creature {
 
     runMotion() {
         if (this.state == "RUN") {
-            this.motion.run += 0.34;
+            this.motion.run += 0.2;
             if (this.motion.run >= 9) this.motion.run = 1;
         }
         else this.motion.run = 0;
@@ -119,22 +119,22 @@ class Creature {
         if (this.isUpPress) {
             // Change motion from bottom if it is shooting down
             if (this.motion.down > 0) {
-                this.motion.down -= 0.5;
+                this.motion.down -= 0.2;
                 if (this.motion.down < 0) this.motion.down = 0;
             }
             // Change motion to top
             else {
-                this.motion.up += 0.5;
+                this.motion.up += 0.2;
                 if (this.motion.up >= 4) this.motion.up = 3;
             }
             // Left direction angle
             if (this.dir == "LEFT") {
-                this.fireAngle += 8;
+                this.fireAngle += 4;
                 if (this.fireAngle > 270) this.fireAngle = 270;
             }
             // Right direction angle
             else {
-                this.fireAngle -= 8;
+                this.fireAngle -= 4;
                 if (this.fireAngle <= - 90) this.fireAngle = -90;
             }
         }
@@ -145,23 +145,23 @@ class Creature {
             if (this.state == "JUMP") {
                 // Change motion from top if it is shooting up
                 if (this.motion.up > 0) {
-                    this.motion.up -= 1;//0.5;
+                    this.motion.up -= 0.34;
                     if (this.motion.up < 0) this.motion.up = 0;
                 }
                 // Change motion to bottom
                 else {
-                    this.motion.down += 1;//0.5;
+                    this.motion.down += 0.34;
                     if (this.motion.down >= 4) this.motion.down = 3;
                 }
 
                 // Left direction angle
                 if (this.dir == "LEFT") {
-                    this.fireAngle -= 15;
+                    this.fireAngle -= 10;
                     if (this.fireAngle <= 90) this.fireAngle = 90;
                 }
                 // Right direction angle
                 else {
-                    this.fireAngle += 15;
+                    this.fireAngle += 10;
                     if (this.fireAngle >= 90) this.fireAngle = 90;
                 }
             }
@@ -178,29 +178,29 @@ class Creature {
             // Left direction angle
             if (this.dir == "LEFT") {
                 if (this.fireAngle > 180) {
-                    this.fireAngle -= 15;
+                    this.fireAngle -= 10;
                     if (this.fireAngle <= 180) this.fireAngle = 180;
                 }
                 else {
-                    this.fireAngle += 8;
+                    this.fireAngle += 4;
                     if (this.fireAngle >= 180) this.fireAngle = 180;
                 }
             }
             // Rigt direction angle
             else {
                 if (this.fireAngle < 0) {
-                    this.fireAngle += 15;
+                    this.fireAngle += 10;
                     if (this.fireAngle >= 0) this.fireAngle = 0;
                 }
                 else {
-                    this.fireAngle -= 8;
+                    this.fireAngle -= 4;
                     if (this.fireAngle <= 0) this.fireAngle = 0;
                 }
             }
             // Change motion to middle
-            this.motion.up -= 0.5;
+            this.motion.up -= 0.34;
             if (this.motion.up < 0) this.motion.up = 0;
-            this.motion.down -= 0.5;
+            this.motion.down -= 0.34;
             if (this.motion.down < 0) this.motion.down = 0;
         }
 

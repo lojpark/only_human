@@ -23,16 +23,16 @@ class Human extends Creature {
 
     snipe() {
         // Accelerate
-        if (this.isUpPress && this.snipeVy > -20) this.snipeVy -= 1.5;
-        if (this.isDownPress && this.snipeVy < 20) this.snipeVy += 1.5;
-        if (this.isLeftPress && this.snipeVx > -20) this.snipeVx -= 1.5;
-        if (this.isRightPress && this.snipeVx < 20) this.snipeVx += 1.5;
+        if (this.isUpPress && this.snipeVy > -12) this.snipeVy -= 0.75;
+        if (this.isDownPress && this.snipeVy < 12) this.snipeVy += 0.75;
+        if (this.isLeftPress && this.snipeVx > -12) this.snipeVx -= 0.75;
+        if (this.isRightPress && this.snipeVx < 12) this.snipeVx += 0.75;
 
         // Friction
-        if (this.snipeVx < 0) this.snipeVx += 0.5;
-        if (this.snipeVx > 0) this.snipeVx -= 0.5;
-        if (this.snipeVy < 0) this.snipeVy += 0.5;
-        if (this.snipeVy > 0) this.snipeVy -= 0.5;
+        if (this.snipeVx < 0) this.snipeVx += 0.25;
+        if (this.snipeVx > 0) this.snipeVx -= 0.25;
+        if (this.snipeVy < 0) this.snipeVy += 0.25;
+        if (this.snipeVy > 0) this.snipeVy -= 0.25;
 
         // Inner range
         if (this.distance(this.x, this.y, this.snipeX + this.snipeVx, this.snipeY + this.snipeVy) < 600) {
@@ -67,10 +67,10 @@ class Human extends Creature {
             let angle, dist, minError = 65536;
             this.fireAngle = 0;
 
-            for (angle = 0; angle < 360; angle++) {
-                for (dist = 0; dist < 600; dist += 25) {
+            for (angle = 0; angle < 360; angle += 0.1) {
+                for (dist = 0; dist < 600; dist += 20) {
                     let destX = this.x + dist * Math.cos(angle * 3.14 / 180);
-                    let destY = this.y + dist * Math.sin(angle * 3.14 / 180) + ((dist / 25) * (0.5 * (1 + dist / 25))) / 2;
+                    let destY = this.y + dist * Math.sin(angle * 3.14 / 180) + ((dist / 20) * (0.5 * (1 + dist / 20))) / 2;
                     let error = this.distance(this.snipeX, this.snipeY, destX, destY);
                     if (minError > error) {
                         minError = error;

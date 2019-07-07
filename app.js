@@ -23,7 +23,7 @@ var players = new Object();
 var robots = new Robots(map);
 var bullets = new Bullets(map);
 
-robots.spawnRobots(100);
+robots.spawnRobots(20);
 
 players.list = {};
 
@@ -55,12 +55,13 @@ players.onConnect = function (socket) {
         }
         else if (data.inputId === "SHOT") {
             if (player.state == "SNIPE") {
-                player.fireAngle = data.angle;
+                bullets.addBullet(player.x, player.y, data.angle, player.snipeRange);
+            }
+            else {
+                bullets.addBullet(player.x, player.y, player.fireAngle, player.snipeRange);
             }
             
             player.state = "IDLE";
-
-            bullets.addBullet(player.x, player.y, player.fireAngle, player.snipeRange);
         }
         else if (data.inputId === "CANCEL") {
             if (player.state == "SNIPE") {
@@ -123,4 +124,4 @@ setInterval(function () {
         socket.emit("NEW_POSITION", pack);
     }
 
-}, 1000/40);
+}, 1000/60);
