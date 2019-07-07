@@ -60,7 +60,7 @@ players.onConnect = function (socket) {
             else {
                 bullets.addBullet(player.x, player.y, player.fireAngle, player.snipeRange);
             }
-            
+
             player.state = "IDLE";
         }
         else if (data.inputId === "CANCEL") {
@@ -112,6 +112,8 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+const FPS = 60, FRAME_INTERVAL = 1000 / FPS;
+
 setInterval(function () {
     let pack = {
         player: players.update(),
@@ -124,4 +126,4 @@ setInterval(function () {
         socket.emit("NEW_POSITION", pack);
     }
 
-}, 1000/60);
+}, FRAME_INTERVAL);
