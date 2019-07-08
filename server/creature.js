@@ -89,7 +89,7 @@ class Creature {
             if (this.x - this.w / 2 <= this.bullets[i].x && this.bullets[i].x <= this.x + this.w / 2) {
                 if (this.y - this.h / 2 <= this.bullets[i].y && this.bullets[i].y <= this.y + this.h / 2) {
                     if (this.id != this.bullets[i].id) {
-                        this.isAlive = false;
+                        this.state = "DEAD";
                         this.bullets[i].isAlive = false;
                         return;
                     }
@@ -110,8 +110,8 @@ class Creature {
         this.gravity();
         this.checkBulletHit();
 
-        // Stop moving when player is sniping
-        if (this.state == "SNIPE" || !this.isAlive) {
+        // Stop moving when player is dead or sniping
+        if (this.state == "DEAD" || this.state == "SNIPE") {
             return;
         }
 

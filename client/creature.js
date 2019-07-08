@@ -48,19 +48,24 @@ class Creature {
             x -= 32;
         }
 
-        if (this.state != "JUMP") {
-            this.context.drawImage(this.image, mRun * this.w, mUp * this.h, this.w, this.h, x, y, this.w, this.h);
+        if (this.state == "DEAD") {
+            this.context.drawImage(this.image, 1 * this.w, 5 * this.h, 42, this.h, x, y, 42, this.h);
         }
         else {
-            if (mDown == 0) {
-                this.context.drawImage(this.image, mUp * this.w, 4 * this.h, this.w, this.h, x, y, this.w, this.h);
+            if (this.state != "JUMP") {
+                this.context.drawImage(this.image, mRun * this.w, mUp * this.h, this.w, this.h, x, y, this.w, this.h);
             }
             else {
-                this.context.drawImage(this.image, (mDown + 3) * this.w, 4 * this.h, this.w, this.h, x, y, this.w, this.h);
+                if (mDown == 0) {
+                    this.context.drawImage(this.image, mUp * this.w, 4 * this.h, this.w, this.h, x, y, this.w, this.h);
+                }
+                else {
+                    this.context.drawImage(this.image, (mDown + 3) * this.w, 4 * this.h, this.w, this.h, x, y, this.w, this.h);
+                }
             }
-        }
 
-        this.weapon.print(x, y, this.state, mRun, mUp, mDown);
+            this.weapon.print(x, y, this.state, mRun, mUp, mDown);
+        }
 
         // Restore the canvas
         this.context.restore();
