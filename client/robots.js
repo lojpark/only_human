@@ -7,6 +7,20 @@ class Robots {
     }
 
     update(packedRobots) {
+        // Remove unremoved players
+        for (let id in this.robots) {
+            let isExist = false;
+            for (let j = 0; j < packedRobots.length; j++) {
+                if (id == packedRobots[j].id) {
+                    isExist = true;
+                    break;
+                }
+            }
+            if (!isExist) {
+                delete this.robots[id];
+            }
+        }
+
         // Update robots
         for (let i = 0; i < packedRobots.length; i++) {
             if (this.robots[packedRobots[i].id] == null) {

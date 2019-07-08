@@ -52,18 +52,16 @@
 
     socket.on("NEW_POSITION", function (data) {
         // Remove unremoved players
-        if (players.length > data.player.length) {
-            for (let id in players) {
-                let isExist = false;
-                for (let j = 0; j < data.player.length; j++) {
-                    if (id == data.player[j].id) {
-                        isExist = true;
-                        break;
-                    }
+        for (let id in players) {
+            let isExist = false;
+            for (let j = 0; j < data.player.length; j++) {
+                if (id == data.player[j].id) {
+                    isExist = true;
+                    break;
                 }
-                if (!isExist) {
-                    delete players[id];
-                }
+            }
+            if (!isExist) {
+                delete players[id];
             }
         }
 
