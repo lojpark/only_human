@@ -4,8 +4,6 @@ class Robot extends Creature {
     constructor(x, y, type, bullets, map) {
         super(x, y, type, bullets, map);
 
-        this.id = Math.random();
-
         this.action = 0;
         this.timer = 0;
     }

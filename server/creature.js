@@ -3,9 +3,11 @@ class Creature {
         this.bullets = bullets;
         this.map = map;
 
+        this.id = Math.random();
+        this.type = type;
+
         this.w = 32;
         this.h = 48;
-        this.type = type;
 
         this.x = x;
         this.y = y;
@@ -82,6 +84,20 @@ class Creature {
         this.x = this.map.modular(this.x, "WIDTH");
     }
 
+    checkBulletHit() {
+        for (let i = 0; i < this.bullets.length; i++) {
+            if (this.x - this.w / 2 <= this.bullets[i].x && this.bullets[i].x <= this.x + this.w / 2) {
+                if (this.y - this.h / 2 <= this.bullets[i].y && this.bullets[i].y <= this.y + this.h / 2) {
+                    if (this.id != this.bullets[i].id) {
+                        this.isAlive = false;
+                        this.bullets[i].isAlive = false;
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
     runMotion() {
         if (this.state == "RUN") {
             this.motion.run += 0.2;
@@ -92,9 +108,10 @@ class Creature {
 
     update() {
         this.gravity();
+        this.checkBulletHit();
 
         // Stop moving when player is sniping
-        if (this.state == "SNIPE") {
+        if (this.state == "SNIPE" || !this.isAlive) {
             return;
         }
 

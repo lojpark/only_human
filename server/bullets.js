@@ -7,8 +7,8 @@ class Bullets {
         this.bullets = [];
     }
 
-    addBullet(x, y, angle, range) {
-        this.bullets.push(new Bullet(x, y, angle, range, this.map));
+    addBullet(id, x, y, angle, range) {
+        this.bullets.push(new Bullet(id, x, y, angle, range, this.map));
     }
 
     update() {

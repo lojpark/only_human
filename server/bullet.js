@@ -1,5 +1,6 @@
 class Bullet {
-    constructor(x, y, angle, range, map) {
+    constructor(id, x, y, angle, range, map) {
+        this.id = id;
         this.x = this.ox = x;
         this.y = this.oy = y;
         this.vy = 0;

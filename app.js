@@ -21,14 +21,14 @@ const Bullets = require('./server/bullets.js');
 var map = new Map(3, 3);
 var bullets = new Bullets(map);
 var players = new Object();
-var robots = new Robots(bullets, map);
+var robots = new Robots(bullets.bullets, map);
 
 robots.spawnRobots(20);
 
 players.list = {};
 
 players.onConnect = function (socket) {
-    let player = new Human(socket.id, 32, 48, 1, bullets, map);
+    let player = new Human(socket.id, 32, 48, 1, bullets.bullets, map);
     players.list[socket.id] = player;
     console.log("player in:", socket.id);
 
@@ -55,10 +55,10 @@ players.onConnect = function (socket) {
         }
         else if (data.inputId === "SHOT") {
             if (player.state == "SNIPE") {
-                bullets.addBullet(player.x, player.y, data.angle, player.snipeRange);
+                bullets.addBullet(player.id, player.x, player.y, data.angle, player.snipeRange);
             }
             else {
-                bullets.addBullet(player.x, player.y, player.fireAngle, player.snipeRange);
+                bullets.addBullet(player.id, player.x, player.y, player.fireAngle, player.snipeRange);
             }
 
             player.state = "IDLE";
