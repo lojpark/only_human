@@ -1,14 +1,15 @@
 const Robot = require('../server/robot.js');
 
 class Robots {
-    constructor(map) {
+    constructor(bullets, map) {
+        this.bullets = bullets;
         this.map = map;
 
         this.robots = [];
     }
 
     addRobot(x, y, type) {
-        this.robots.push(new Robot(x, y, type, this.map));
+        this.robots.push(new Robot(x, y, type, this.bullets, this.map));
     }
 
     spawnRobots(number) {

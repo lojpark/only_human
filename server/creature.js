@@ -1,9 +1,11 @@
 class Creature {
-    constructor(x, y, type, map) {
+    constructor(x, y, type, bullets, map) {
+        this.bullets = bullets;
+        this.map = map;
+
         this.w = 32;
         this.h = 48;
         this.type = type;
-        this.map = map;
 
         this.x = x;
         this.y = y;

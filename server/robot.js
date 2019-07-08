@@ -1,8 +1,8 @@
 const Creature = require ('../server/creature.js');
 
 class Robot extends Creature {
-    constructor(x, y, type, map) {
-        super(x, y, type, map);
+    constructor(x, y, type, bullets, map) {
+        super(x, y, type, bullets, map);
 
         this.id = Math.random();
 

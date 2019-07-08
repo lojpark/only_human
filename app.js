@@ -19,16 +19,16 @@ const Human = require('./server/human.js');
 const Robots = require('./server/robots.js');
 const Bullets = require('./server/bullets.js');
 var map = new Map(3, 3);
-var players = new Object();
-var robots = new Robots(map);
 var bullets = new Bullets(map);
+var players = new Object();
+var robots = new Robots(bullets, map);
 
 robots.spawnRobots(20);
 
 players.list = {};
 
 players.onConnect = function (socket) {
-    let player = new Human(socket.id, 32, 48, 1, map);
+    let player = new Human(socket.id, 32, 48, 1, bullets, map);
     players.list[socket.id] = player;
     console.log("player in:", socket.id);
 
