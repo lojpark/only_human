@@ -19,12 +19,13 @@ class Map {
     }
 
     print(screen) {
-        var i, j;
-        var si = Math.round((screen.y + 225) / 30) - 8;
-        var sj = Math.round((screen.x + 400) / 30) - 14;
+        let rowOffset = screen.height / 30;
+        let colOffset = screen.width / 30;
+        let si = Math.round((screen.y + screen.height / 2) / 30 - rowOffset / 2);
+        let sj = Math.round((screen.x + screen.width / 2) / 30 - colOffset / 2) - 1;
 
-        for (i = si; i < si + 16 + 4; i++) {
-            for (j = sj; j <= sj + 24 + 4; j++) {
+        for (let i = si; i < si + rowOffset; i++) {
+            for (let j = sj; j <= sj + colOffset + 1; j++) {
                 let row = i, col = j;
                 row = this.modular(row, "ROW");
                 col = this.modular(col, "COL");

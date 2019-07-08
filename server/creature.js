@@ -89,13 +89,13 @@ class Creature {
         if (this.state == "DEAD") {
             return;
         }
-        
+
         for (let i = 0; i < this.bullets.length; i++) {
             if (this.x - this.w / 2 <= this.bullets[i].x && this.bullets[i].x <= this.x + this.w / 2) {
                 if (this.y - this.h / 2 <= this.bullets[i].y && this.bullets[i].y <= this.y + this.h / 2) {
                     if (this.id != this.bullets[i].id) {
                         this.state = "DEAD";
-                        this.deadTimer = 100;
+                        this.deadTimer = 100 + Math.random() * 200;
                         this.bullets[i].isAlive = false;
                         return;
                     }

@@ -1,14 +1,19 @@
 class Screen {
-    constructor(player, map) {
-        this.SCREEN_WIDTH = 800;
-        this.SCREEN_HEIGHT = 450;
+    constructor(width, height, player, map) {
+        this.setSize(width, height);
+        
         this.MAP_WIDTH = map.width * 720;
         this.MAP_HEIGHT = map.height * 480;
 
-        this.x = player.x - this.SCREEN_WIDTH / 2;
-        this.y = player.y - this.SCREEN_HEIGHT / 2;
-        this.destX = player.x + this.SCREEN_WIDTH / 2;
-        this.destY = player.y + this.SCREEN_HEIGHT / 2;
+        this.x = player.x - this.width / 2;
+        this.y = player.y - this.height / 2;
+        this.destX = player.x + this.width / 2;
+        this.destY = player.y + this.height / 2;
+    }
+
+    setSize(width, height) {
+        this.width = width;
+        this.height = height;
     }
 
     update(player) {
@@ -22,27 +27,27 @@ class Screen {
             this.dy = player.y;
         }
 
-        if (this.dx - this.x - this.SCREEN_WIDTH / 2 > 700) {
+        if (this.dx - this.x - this.width / 2 > 700) {
             this.x += this.MAP_WIDTH;
         }
-        else if (this.x - this.dx + this.SCREEN_WIDTH / 2 > 700) {
+        else if (this.x - this.dx + this.width / 2 > 700) {
             this.x -= this.MAP_WIDTH;
         }
-        if (this.dy - this.y - this.SCREEN_HEIGHT / 2 > 700) {
+        if (this.dy - this.y - this.height / 2 > 700) {
             this.y += this.MAP_HEIGHT;
         }
-        else if (this.y - this.dy + this.SCREEN_HEIGHT / 2 > 700) {
+        else if (this.y - this.dy + this.height / 2 > 700) {
             this.y -= this.MAP_HEIGHT;
         }
 
         /* Chase the destination */
-        this.x += (this.dx - this.x - this.SCREEN_WIDTH / 2) / 10;
-        this.y += (this.dy - this.y - this.SCREEN_HEIGHT / 2) / 10;
+        this.x += (this.dx - this.x - this.width / 2) / 10;
+        this.y += (this.dy - this.y - this.height / 2) / 10;
 
         /* Just set to destination if it is close */
-        if (Math.abs(this.x + this.SCREEN_WIDTH / 2 - this.dx) + Math.abs(this.y + this.SCREEN_HEIGHT / 2 - this.dy) <= 1) {
-            this.x = this.dx - this.SCREEN_WIDTH / 2;
-            this.y = this.dy - this.SCREEN_HEIGHT / 2;
+        if (Math.abs(this.x + this.width / 2 - this.dx) + Math.abs(this.y + this.height / 2 - this.dy) <= 1) {
+            this.x = this.dx - this.width / 2;
+            this.y = this.dy - this.height / 2;
         }
 
         /* Make position integer */

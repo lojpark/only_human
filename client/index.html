@@ -1,18 +1,12 @@
-<canvas id="context" width="800" height="450"></canvas>
+<canvas id="context"></canvas>
 
 <style type="text/css">
     #context {
         background: #1D256D;
     }
 
-    html,
-    body {
-        height: 100%;
-    }
-
-    html {
-        display: table;
-        margin: auto;
+    html, body {
+        overflow: hidden;
     }
 
     body {
@@ -37,6 +31,7 @@
 
     var canvas = document.getElementById("context");
     var context = canvas.getContext("2d");
+    var CANVAS_WIDTH = 0, CANVAS_HEIGHT = 0;
 
     var FPS = 60, FRAME_INTERVAL = 1000 / FPS;
     var lastTimestamp = 0;
@@ -81,7 +76,7 @@
             players[data.player[i].id].update();
         }
 
-        context.clearRect(0, 0, 800, 450);
+        context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         screen.update(players[socketId]);
         robots.update(data.robot);
@@ -102,6 +97,8 @@
         socketId = id;
 
         // Initialize the context setting
+        canvas.width = CANVAS_WIDTH = document.body.clientWidth;
+        canvas.height = CANVAS_HEIGHT = document.body.clientHeight;
         context.imageSmoothingEnabled = false;
 
         // Initialize the map
@@ -117,11 +114,18 @@
         bullets = new Bullets(map, context);
 
         // Initialize the screen
-        screen = new Screen(players[socketId], map);
+        screen = new Screen(CANVAS_WIDTH, CANVAS_HEIGHT, players[socketId], map);
     });
 
     socket.on("REMOVE_PERSON", function(data) {
         delete players[data];
+    });
+
+    // Screen resize event
+    window.addEventListener('resize', function(event) {
+        CANVAS_WIDTH = document.body.clientWidth;
+        CANVAS_HEIGHT = document.body.clientHeight;
+        screen.setSize(CANVAS_WIDTH, CANVAS_HEIGHT);
     });
 
     document.onkeydown = function (event) {
