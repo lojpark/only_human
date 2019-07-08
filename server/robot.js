@@ -11,6 +11,7 @@ class Robot extends Creature {
     }
 
     ai() {
+        // Up or Down
         if (this.actionUD == 1) {
             this.isUpPress = true;
         }
@@ -18,6 +19,7 @@ class Robot extends Creature {
             this.isDownPress = true;
         }
 
+        // Left or Right
         if (this.actionLR == 1) {
             this.isLeftPress = true;
         }
@@ -25,8 +27,29 @@ class Robot extends Creature {
             this.isRightPress = true;
         }
 
-        if (Math.random() < 0.01) {
-            this.isJumpPress = true;
+        // Jump
+        if (this.state != "JUMP") {
+            // Random jump
+            if (Math.random() < 0.01) {
+                this.isJumpPress = true;
+            }
+            // Jump before empty floor
+            if (Math.random() < 0.1) {
+                if (this.isLeftPress) {
+                    let x = this.map.modular(Math.floor(this.x / 30), "COL");
+                    let y = this.map.modular(Math.floor((this.y + this.h / 2) / 30), "ROW");
+                    if (this.map.map[y][x] == 0) {
+                        this.isJumpPress = true;
+                    }
+                }
+                else if (this.isRightPress) {
+                    let x = this.map.modular(Math.floor(this.x / 30), "COL");
+                    let y = this.map.modular(Math.floor((this.y + this.h / 2) / 30), "ROW");
+                    if (this.map.map[y][x] == 0) {
+                        this.isJumpPress = true;
+                    }
+                }
+            }
         }
 
         this.timerUD--;
