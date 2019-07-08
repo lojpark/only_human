@@ -18,6 +18,7 @@ class Creature {
         this.state = "IDLE";
         this.speed = 2.5;
         this.fireAngle = 0;
+        this.deadTimer = 0;
 
         this.motion = new Object();
         this.motion.run = 0;
@@ -85,11 +86,16 @@ class Creature {
     }
 
     checkBulletHit() {
+        if (this.state == "DEAD") {
+            return;
+        }
+        
         for (let i = 0; i < this.bullets.length; i++) {
             if (this.x - this.w / 2 <= this.bullets[i].x && this.bullets[i].x <= this.x + this.w / 2) {
                 if (this.y - this.h / 2 <= this.bullets[i].y && this.bullets[i].y <= this.y + this.h / 2) {
                     if (this.id != this.bullets[i].id) {
                         this.state = "DEAD";
+                        this.deadTimer = 100;
                         this.bullets[i].isAlive = false;
                         return;
                     }
@@ -110,8 +116,17 @@ class Creature {
         this.gravity();
         this.checkBulletHit();
 
-        // Stop moving when player is dead or sniping
-        if (this.state == "DEAD" || this.state == "SNIPE") {
+        // Stop moving when player is dead
+        if (this.state == "DEAD") {
+            this.deadTimer--;
+            if (this.deadTimer <= 0) {
+                this.isAlive = false;
+            }
+            return;
+        }
+
+        // Stop moving when player is sniping
+        if (this.state == "SNIPE") {
             return;
         }
 

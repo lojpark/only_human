@@ -27,18 +27,19 @@ class Robots {
             // Remove dead robot
             if (!this.robots[i].isAlive) {
                 this.robots.splice(i, 1);
+                // And respawn it
+                this.addRobot(30, 30, 1);
             }
-            // Packing
-            else {
-                pack.push({
-                    x: this.robots[i].x,
-                    y: this.robots[i].y,
-                    id: this.robots[i].id,
-                    dir: this.robots[i].dir,
-                    state: this.robots[i].state,
-                    motion: this.robots[i].motion,
-                });
-            }
+        }
+        for (let i = 0; i < this.robots.length; i++) {
+            pack.push({
+                x: this.robots[i].x,
+                y: this.robots[i].y,
+                id: this.robots[i].id,
+                dir: this.robots[i].dir,
+                state: this.robots[i].state,
+                motion: this.robots[i].motion,
+            });
         }
 
         return pack;
