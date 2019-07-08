@@ -16,7 +16,7 @@ class Creature {
         this.vx = 0;
         this.dir = "RIGHT";
         this.state = "IDLE";
-        this.speed = 3;
+        this.speed = 2.5;
         this.fireAngle = 0;
 
         this.motion = new Object();

@@ -7,7 +7,7 @@ class Bullet {
         this.w = 5;
         this.h = 5;
         this.angle = angle;
-        this.speed = 20;
+        this.speed = 25;
         this.range = 0;
         this.maxRange = range;
         this.isAlive = true;

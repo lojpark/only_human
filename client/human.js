@@ -67,10 +67,10 @@ class Human extends Creature {
             let angle, dist, minError = 65536;
             this.fireAngle = 0;
 
-            for (angle = 0; angle < 360; angle += 0.1) {
-                for (dist = 0; dist < 600; dist += 20) {
+            for (angle = 0; angle < 360; angle += 0.5) {
+                for (dist = 0; dist < 600; dist += 25) {
                     let destX = this.x + dist * Math.cos(angle * 3.14 / 180);
-                    let destY = this.y + dist * Math.sin(angle * 3.14 / 180) + ((dist / 20) * (0.5 * (1 + dist / 20))) / 2;
+                    let destY = this.y + dist * Math.sin(angle * 3.14 / 180) + ((dist / 25) * (0.5 * (1 + dist / 25))) / 2;
                     let error = this.distance(this.snipeX, this.snipeY, destX, destY);
                     if (minError > error) {
                         minError = error;

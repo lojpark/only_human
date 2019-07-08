@@ -12,7 +12,6 @@ class Creature {
         this.vx = 0;
         this.dir = "RIGHT";
         this.state = "IDLE";
-        this.speed = 6;
         this.fireAngle = 0;
 
         this.motion = new Object();
@@ -30,8 +29,8 @@ class Creature {
         // Save the canvas
         this.context.save();
 
-        let x = this.map.modular(this.x - this.w / 2 - screen.x, "WIDTH");
-        const y = this.map.modular(this.y + this.h / 2 - screen.y, "HEIGHT") - this.h;
+        let x = Math.floor(this.map.modular(this.x + this.w / 2 - screen.x, "WIDTH") - this.w);
+        const y = Math.floor(this.map.modular(this.y + this.h / 2 - screen.y, "HEIGHT") - this.h);
         let mRun = Math.floor(this.motion.run);
         let mUp = Math.floor(this.motion.up);
         const mDown = Math.floor(this.motion.down);
