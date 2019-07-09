@@ -77,7 +77,9 @@ players.onConnect = function (socket) {
 
 players.onDisconnect = function (socket) {
     console.log("player out:", socket.id);
+    
     delete players.list[socket.id];
+    leaderboard.update(socket.id, "DIE");
 }
 
 players.update = function () {
