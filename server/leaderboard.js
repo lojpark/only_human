@@ -19,7 +19,7 @@ class LeaderBoard {
         if (state == "PACKING") {
             let pack = [];
 
-            for (let id = 0; id < this.leaders.length; id++) {
+            for (let id in this.leaders) {
                 pack.push({
                     name: this.leaders[id].name,
                     score: this.leaders[id].score,

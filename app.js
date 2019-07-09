@@ -20,10 +20,10 @@ const Robots = require('./server/robots.js');
 const Bullets = require('./server/bullets.js');
 const LeaderBoard = require('./server/leaderboard.js');
 var map = new Map(3, 3);
-var bullets = new Bullets(map);
+var leaderboard = new LeaderBoard();
+var bullets = new Bullets(leaderboard, map);
 var players = new Object();
 var robots = new Robots(bullets.bullets, map);
-var leaderboard = new LeaderBoard();
 
 robots.spawnRobots(20);
 

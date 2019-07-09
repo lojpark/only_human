@@ -93,7 +93,7 @@
         players[socketId].printSnipe(screen);
         robots.print(screen);
         bullets.print(screen);
-        leaderboard.print();
+        leaderboard.print(screen);
     });
 
     socket.on("INIT_GAME", function(id, player, tmpMap) {

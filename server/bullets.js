@@ -1,7 +1,8 @@
 const Bullet = require('../server/bullet.js');
 
 class Bullets {
-    constructor(map) {
+    constructor(leaderboard, map) {
+        this.leaderboard = leaderboard;
         this.map = map;
 
         this.bullets = [];
