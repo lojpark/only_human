@@ -1,4 +1,5 @@
 const Robot = require('../server/robot.js');
+const KillerRobot = require('../server/killerrobot.js');
 
 class Robots {
     constructor(bullets, map) {
@@ -9,7 +10,7 @@ class Robots {
     }
 
     addRobot(x, y, type) {
-        this.robots.push(new Robot(x, y, type, this.bullets, this.map));
+        this.robots.push(new KillerRobot(x, y, type, this.bullets, this.map));
     }
 
     spawnRobots(number) {
