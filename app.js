@@ -18,10 +18,12 @@ const Map = require('./server/map.js');
 const Human = require('./server/human.js');
 const Robots = require('./server/robots.js');
 const Bullets = require('./server/bullets.js');
+const LeaderBoard = require('./server/leaderboard.js');
 var map = new Map(3, 3);
 var bullets = new Bullets(map);
 var players = new Object();
 var robots = new Robots(bullets.bullets, map);
+var leaderboard = new LeaderBoard();
 
 robots.spawnRobots(20);
 
@@ -30,6 +32,7 @@ players.list = {};
 players.onConnect = function (socket) {
     let player = new Human(socket.id, 32, 48, 1, bullets.bullets, map);
     players.list[socket.id] = player;
+    leaderboard.update(socket.id, "CREATE");
     console.log("player in:", socket.id);
 
     socket.on("KEY_PRESS", function (data) {
@@ -119,6 +122,7 @@ setInterval(function () {
         player: players.update(),
         robot: robots.update(),
         bullet: bullets.update(),
+        leaderboard: leaderboard.update(null, "PACKING"),
     }
 
     for (let i in SOCKET_LIST) {

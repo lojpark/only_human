@@ -1,5 +1,5 @@
 class LeaderBoard {
-    constructor(width, height) {
+    constructor() {
         this.leaders = {};
     }
 
@@ -14,6 +14,19 @@ class LeaderBoard {
         }
         if (state == "DIE") {
             delete this.leaders[id];
+        }
+
+        if (state == "PACKING") {
+            let pack = [];
+
+            for (let id = 0; id < this.leaders.length; id++) {
+                pack.push({
+                    name: this.leaders[id].name,
+                    score: this.leaders[id].score,
+                });
+            }
+
+            return pack;
         }
     }
 }
