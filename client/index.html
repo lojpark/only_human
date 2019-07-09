@@ -138,6 +138,9 @@
         if (players[socketId] == null) {
             return;
         }
+        if (players[socketId].state == "DEAD") {
+            return;
+        }
 
         if (event.keyCode === 38) {
             players[socketId].isUpPress = true;
