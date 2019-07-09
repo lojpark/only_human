@@ -99,8 +99,9 @@ class Creature {
                         this.state = "DEAD";
                         this.deadTimer = 100 + Math.random() * 200;
                         this.bullets.bullets[i].isAlive = false;
-                        if (this.species == "HUMAN") {
-                            //this.leaderboard.update(this.bullets.bullets[i].id, "KILL");
+                        if (this.species == "HUMAN" || this.species == "KILLER_ROBOT") {
+                            this.leaderboard.update(this.bullets.bullets[i].id, "KILL");
+                            this.leaderboard.update(this.id, "DIE");
                         }
                         return;
                     }

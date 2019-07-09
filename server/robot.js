@@ -13,6 +13,10 @@ class Robot extends Creature {
     }
 
     ai() {
+        if (this.state == "DEAD") {
+            return;
+        }
+        
         // Up or Down
         if (this.actionUD == 1) {
             this.isUpPress = true;

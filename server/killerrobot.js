@@ -5,9 +5,14 @@ class KillerRobot extends Robot {
         super(x, y, type, bullets, leaderboard, map);
 
         this.species = "KILLER_ROBOT";
+        leaderboard.update(this.id, "CREATE");
     }
 
     ai() {
+        if (this.state == "DEAD") {
+            return;
+        }
+
         super.ai();
 
         if (Math.random() < 0.001) {

@@ -11,10 +11,10 @@ class LeaderBoard {
             this.leaders[id].name = NAMES[Math.floor(Math.random() * NAMES.length)];
             this.leaders[id].score = 0;
         }
-        if (state == "KILL") {
+        if (state == "KILL" && this.leaders[id] != null) {
             this.leaders[id].score++;
         }
-        if (state == "DIE") {
+        if (state == "DIE" && this.leaders[id] != null) {
             delete this.leaders[id];
         }
 
