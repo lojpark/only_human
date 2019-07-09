@@ -23,6 +23,7 @@
 <script type="text/javascript" src="client/screen.js"></script>
 <script type="text/javascript" src="client/weapon.js"></script>
 <script type="text/javascript" src="client/bullets.js"></script>
+<script type="text/javascript" src="client/leaderboard.js"></script>
 
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
@@ -41,6 +42,7 @@
     var screen;
     var robots;
     var bullets;
+    var leaderboard;
     let key = { shot: false };
 
     var socketId = 0;
@@ -81,6 +83,7 @@
         screen.update(players[socketId]);
         robots.update(data.robot);
         bullets.update(data.bullet);
+        leaderboard.update(data.leaderboard);
 
         // Print screen
         map.print(screen);
@@ -90,6 +93,7 @@
         players[socketId].printSnipe(screen);
         robots.print(screen);
         bullets.print(screen);
+        leaderboard.print();
     });
 
     socket.on("INIT_GAME", function(id, player, tmpMap) {
@@ -115,6 +119,8 @@
 
         // Initialize the screen
         screen = new Screen(CANVAS_WIDTH, CANVAS_HEIGHT, players[socketId], map);
+
+        leaderboard = new LeaderBoard(context);
     });
 
     socket.on("REMOVE_PERSON", function(data) {
