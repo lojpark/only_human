@@ -1,14 +1,18 @@
 const Robot = require ('../server/robot.js');
 
 class KillerRobot extends Robot {
-    constructor(x, y, type, bullets, map) {
-        super(x, y, type, bullets, map);
+    constructor(x, y, type, bullets, leaderboard, map) {
+        super(x, y, type, bullets, leaderboard, map);
 
         this.species = "KILLER_ROBOT";
     }
 
     ai() {
         super.ai();
+
+        if (Math.random() < 0.001) {
+            this.bullets.addBullet(this.id, this.x, this.y, 0, 600);
+        }
     }
 
     update() {

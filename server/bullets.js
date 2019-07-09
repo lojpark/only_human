@@ -1,8 +1,7 @@
 const Bullet = require('../server/bullet.js');
 
 class Bullets {
-    constructor(leaderboard, map) {
-        this.leaderboard = leaderboard;
+    constructor(map) {
         this.map = map;
 
         this.bullets = [];
@@ -20,9 +19,6 @@ class Bullets {
 
             // Remove dead bullet
             if (!this.bullets[i].isAlive) {
-                if (this.bullets[i].isKill) {
-                    this.leaderboard.update(this.bullets[i].id, "KILL");
-                }
                 this.bullets.splice(i, 1);
             }
             // Packing

@@ -1,6 +1,7 @@
 class Creature {
-    constructor(x, y, type, bullets, map) {
+    constructor(x, y, type, bullets, leaderboard, map) {
         this.bullets = bullets;
+        this.leaderboard = leaderboard;
         this.map = map;
 
         this.id = Math.random();
@@ -91,15 +92,15 @@ class Creature {
             return;
         }
 
-        for (let i = 0; i < this.bullets.length; i++) {
-            if (this.x - this.w / 2 <= this.bullets[i].x && this.bullets[i].x <= this.x + this.w / 2) {
-                if (this.y - this.h / 2 <= this.bullets[i].y && this.bullets[i].y <= this.y + this.h / 2) {
-                    if (this.id != this.bullets[i].id) {
+        for (let i = 0; i < this.bullets.bullets.length; i++) {
+            if (this.x - this.w / 2 <= this.bullets.bullets[i].x && this.bullets.bullets[i].x <= this.x + this.w / 2) {
+                if (this.y - this.h / 2 <= this.bullets.bullets[i].y && this.bullets.bullets[i].y <= this.y + this.h / 2) {
+                    if (this.id != this.bullets.bullets[i].id) {
                         this.state = "DEAD";
                         this.deadTimer = 100 + Math.random() * 200;
-                        this.bullets[i].isAlive = false;
+                        this.bullets.bullets[i].isAlive = false;
                         if (this.species == "HUMAN") {
-                            this.bullets[i].isKill = true;
+                            //this.leaderboard.update(this.bullets.bullets[i].id, "KILL");
                         }
                         return;
                     }

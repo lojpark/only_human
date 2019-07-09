@@ -2,15 +2,16 @@ const Robot = require('../server/robot.js');
 const KillerRobot = require('../server/killerrobot.js');
 
 class Robots {
-    constructor(bullets, map) {
+    constructor(bullets, leaderboard, map) {
         this.bullets = bullets;
+        this.leaderboard = leaderboard;
         this.map = map;
 
         this.robots = [];
     }
 
     addRobot(x, y, type) {
-        this.robots.push(new KillerRobot(x, y, type, this.bullets, this.map));
+        this.robots.push(new KillerRobot(x, y, type, this.bullets, this.leaderboard, this.map));
     }
 
     spawnRobots(number) {

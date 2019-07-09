@@ -1,8 +1,8 @@
 const Creature = require ('../server/creature.js');
 
 class Human extends Creature {
-    constructor(id, x, y, type, bullets, map) {
-        super(x, y, type, bullets, map);
+    constructor(id, x, y, type, bullets, leaderboard, map) {
+        super(x, y, type, bullets, leaderboard, map);
 
         this.id = id;
         this.species = "HUMAN";

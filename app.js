@@ -21,16 +21,16 @@ const Bullets = require('./server/bullets.js');
 const LeaderBoard = require('./server/leaderboard.js');
 var map = new Map(3, 3);
 var leaderboard = new LeaderBoard();
-var bullets = new Bullets(leaderboard, map);
+var bullets = new Bullets(map);
 var players = new Object();
-var robots = new Robots(bullets.bullets, map);
+var robots = new Robots(bullets, leaderboard, map);
 
 robots.spawnRobots(20);
 
 players.list = {};
 
 players.onConnect = function (socket) {
-    let player = new Human(socket.id, 32, 48, 1, bullets.bullets, map);
+    let player = new Human(socket.id, 32, 48, 1, bullets, leaderboard, map);
     players.list[socket.id] = player;
     leaderboard.update(socket.id, "CREATE");
     console.log("player in:", socket.id);
@@ -77,7 +77,7 @@ players.onConnect = function (socket) {
 
 players.onDisconnect = function (socket) {
     console.log("player out:", socket.id);
-    
+
     delete players.list[socket.id];
     leaderboard.update(socket.id, "DIE");
 }
