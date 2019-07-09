@@ -5,6 +5,7 @@ class Human extends Creature {
         super(x, y, type, bullets, map);
 
         this.id = id;
+        this.species = "HUMAN";
 
         this.snipeRange = 600;
     }

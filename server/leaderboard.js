@@ -1,3 +1,5 @@
+let NAMES = ["Doge", "Newbie", "Go", "Park", "rg", "asdf", "Joe", "KILLER"];
+
 class LeaderBoard {
     constructor() {
         this.leaders = {};
@@ -6,7 +8,7 @@ class LeaderBoard {
     update(id, state) {
         if (state == "CREATE") {
             this.leaders[id] = new Object();
-            this.leaders[id].name = "Doge";
+            this.leaders[id].name = NAMES[Math.floor(Math.random() * NAMES.length)];
             this.leaders[id].score = 0;
         }
         if (state == "KILL") {

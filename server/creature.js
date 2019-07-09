@@ -5,6 +5,7 @@ class Creature {
 
         this.id = Math.random();
         this.type = type;
+        this.species = "";
 
         this.w = 32;
         this.h = 48;
@@ -97,7 +98,9 @@ class Creature {
                         this.state = "DEAD";
                         this.deadTimer = 100 + Math.random() * 200;
                         this.bullets[i].isAlive = false;
-                        this.bullets[i].isKill = true;
+                        if (this.species == "HUMAN") {
+                            this.bullets[i].isKill = true;
+                        }
                         return;
                     }
                 }
