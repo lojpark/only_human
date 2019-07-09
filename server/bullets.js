@@ -20,6 +20,9 @@ class Bullets {
 
             // Remove dead bullet
             if (!this.bullets[i].isAlive) {
+                if (this.bullets[i].isKill) {
+                    this.leaderboard.update(this.bullets[i].id, "KILL");
+                }
                 this.bullets.splice(i, 1);
             }
             // Packing

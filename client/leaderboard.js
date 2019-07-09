@@ -10,6 +10,10 @@ class LeaderBoard {
         for (let i = 0; i < packedLeaderBoard.length; i++) {
             this.leaders[i] = packedLeaderBoard[i];
         }
+
+        this.leaders.sort(function(t, u) {
+            return u.score - t.score;
+        });
     }
 
     print(screen) {

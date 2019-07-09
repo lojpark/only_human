@@ -11,6 +11,7 @@ class Bullet {
         this.range = 0;
         this.maxRange = range;
         this.isAlive = true;
+        this.isKill = false;
 
         this.map = map;
     }
