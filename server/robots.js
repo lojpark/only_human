@@ -11,13 +11,21 @@ class Robots {
         this.robots = [];
     }
 
-    addRobot(x, y, type) {
-        this.robots.push(new KillerRobot(x, y, type, this.players, this.bullets, this.leaderboard, this.map));
+    addRobot(x, y, type, species) {
+        if (species == "KILLER_ROBOT") {
+            this.robots.push(new KillerRobot(x, y, type, this.players, this.bullets, this.leaderboard, this.map));
+        }
+        else if (species == "ROBOT") {
+            this.robots.push(new Robot(x, y, type, this.bullets, this.leaderboard, this.map));
+        }
     }
 
-    spawnRobots(number) {
-        for (let i = 1; i <= number; i++) {
-            this.addRobot(30, 30, 1);
+    spawnRobots(killerRobotNumber, robotNumber) {
+        for (let i = 1; i <= killerRobotNumber; i++) {
+            this.addRobot(30, 30, 1, "KILLER_ROBOT");
+        }
+        for (let i = 1; i <= robotNumber; i++) {
+            this.addRobot(30, 30, 1, "ROBOT");
         }
     }
 
@@ -29,9 +37,10 @@ class Robots {
 
             // Remove dead robot
             if (!this.robots[i].isAlive) {
+                let species = this.robots[i].species;
                 this.robots.splice(i, 1);
                 // And respawn it
-                this.addRobot(30, 30, 1);
+                this.addRobot(30, 30, 1, species);
             }
         }
         for (let i = 0; i < this.robots.length; i++) {

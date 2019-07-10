@@ -27,7 +27,7 @@ var players = new Object();
 players.list = {};
 
 var robots = new Robots(players.list, bullets, leaderboard, map);
-robots.spawnRobots(20);
+robots.spawnRobots(5, 20);
 
 players.onConnect = function (socket) {
     let player = new Human(socket.id, 32, 48, 1, bullets, leaderboard, map);
