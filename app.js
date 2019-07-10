@@ -22,12 +22,12 @@ const LeaderBoard = require('./server/leaderboard.js');
 var map = new Map(3, 3);
 var leaderboard = new LeaderBoard();
 var bullets = new Bullets(map);
+
 var players = new Object();
-var robots = new Robots(bullets, leaderboard, map);
-
-robots.spawnRobots(20);
-
 players.list = {};
+
+var robots = new Robots(players.list, bullets, leaderboard, map);
+robots.spawnRobots(20);
 
 players.onConnect = function (socket) {
     let player = new Human(socket.id, 32, 48, 1, bullets, leaderboard, map);
