@@ -36,7 +36,7 @@ class Robot extends Creature {
         // Jump
         if (this.state != "JUMP") {
             // Random jump
-            if (Math.random() < 0.01) {
+            if (Math.random() < 0.005) {
                 this.isJumpPress = true;
             }
             // Jump before empty floor
@@ -69,17 +69,17 @@ class Robot extends Creature {
             }
             else if (rv <= 0.9) {
                 this.actionUD = 1;
-                this.timerUD = Math.floor(Math.random() * 70);
+                this.timerUD = Math.floor(Math.random() * 100);
             }
             else {
                 this.actionUD = 2;
-                this.timerUD = Math.floor(Math.random() * 100);
+                this.timerUD = Math.floor(Math.random() * 150);
             }
 
             this.isUpPress = this.isDownPress = false;
         }
         if (this.timerLR <= 0) {
-            this.timerLR = Math.floor(Math.random() * 100);
+            this.timerLR = Math.floor(Math.random() * 150);
             this.actionLR = Math.floor(Math.random() * 3);
 
             this.isLeftPress = this.isRightPress = false;
