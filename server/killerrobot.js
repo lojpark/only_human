@@ -33,6 +33,10 @@ class KillerRobot extends Robot {
                         delete this.target[id];
                         continue;
                     }
+                    if (this.players[id].state == "DEAD") {
+                        delete this.target[id];
+                        continue;
+                    }
                     if (this.distance(this.players[id].x, this.players[id].y, this.x, this.y) > 600) {
                         continue;
                     }
@@ -56,10 +60,10 @@ class KillerRobot extends Robot {
                     break;
                 }
             }
+            return;
         }
-        else {
-            super.ai();
-        }
+        
+        super.ai();
 
         for (let id in this.players) {
             this.target[id] = true;
@@ -75,7 +79,7 @@ class KillerRobot extends Robot {
                 if (this.distance(this.players[id].x, this.players[id].y, this.x, this.y) > 600) {
                     continue;
                 }
-                
+
                 this.snipeTimer = this.distance(this.players[id].x, this.players[id].y, this.x, this.y) / 10 + Math.random() * 100;
                 this.state = "SNIPE";
                 break;
