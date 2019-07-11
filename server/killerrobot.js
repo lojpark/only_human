@@ -18,6 +18,23 @@ class KillerRobot extends Robot {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     };
 
+    setTarget() {
+        for (let id in this.target) {
+            if (this.players[id] == null) {
+                delete this.target[id];
+                continue;
+            }
+
+            if (this.distance(this.players[id].x, this.players[id].y, this.x, this.y) > 600) {
+                continue;
+            }
+
+            this.snipeTimer = this.distance(this.players[id].x, this.players[id].y, this.x, this.y) / 10 + Math.random() * 100;
+            this.state = "SNIPE";
+            break;
+        }
+    }
+
     ai() {
         if (this.state == "DEAD") {
             return;
@@ -70,20 +87,7 @@ class KillerRobot extends Robot {
         }
 
         if (Math.random() < 0.001) {
-            for (let id in this.target) {
-                if (this.players[id] == null) {
-                    delete this.target[id];
-                    continue;
-                }
-
-                if (this.distance(this.players[id].x, this.players[id].y, this.x, this.y) > 600) {
-                    continue;
-                }
-
-                this.snipeTimer = this.distance(this.players[id].x, this.players[id].y, this.x, this.y) / 10 + Math.random() * 100;
-                this.state = "SNIPE";
-                break;
-            }
+            this.setTarget();
         }
     }
 
