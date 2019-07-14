@@ -29,8 +29,31 @@ class Robots {
         }
     }
 
+    findTarget() {
+        let candidate = {};
+
+        for (let id in this.players) {
+            candidate[id] = true;
+        }
+
+        for (let i = 0; i < this.robots.length; i++) {
+            if (this.robots[i].species != "KILLER_ROBOT") {
+                continue;
+            }
+
+            for (let id in candidate) {
+                if (this.robots[i].distance(this.players[id].x, this.players[id].y, this.robots[i].x, this.robots[i].y) > 600) {
+                    continue;
+                }
+                this.robots[i].setTarget(id);
+            }
+        }
+    }
+
     update() {
         let pack = [];
+
+        this.findTarget();
 
         for (let i = this.robots.length - 1; i >= 0; i--) {
             this.robots[i].update();

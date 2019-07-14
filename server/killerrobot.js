@@ -18,7 +18,11 @@ class KillerRobot extends Robot {
         return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     };
 
-    setTarget() {
+    setTarget(id) {
+        this.target[id] = true;
+    }
+
+    snipeTarget() {
         for (let id in this.target) {
             if (this.players[id] == null) {
                 delete this.target[id];
@@ -82,12 +86,10 @@ class KillerRobot extends Robot {
         
         super.ai();
 
-        for (let id in this.players) {
-            this.target[id] = true;
-        }
+        this.setTarget();
 
         if (Math.random() < 0.001) {
-            this.setTarget();
+            this.snipeTarget();
         }
     }
 
