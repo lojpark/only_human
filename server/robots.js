@@ -9,6 +9,8 @@ class Robots {
         this.map = map;
 
         this.robots = [];
+
+        this.humanCandidate = {};
     }
 
     addRobot(x, y, type, species) {
@@ -30,18 +32,18 @@ class Robots {
     }
 
     findTarget() {
-        let candidate = {};
-
         for (let id in this.players) {
-            candidate[id] = true;
+            this.humanCandidate[id] = true;
         }
+    }
 
+    setTarget() {
         for (let i = 0; i < this.robots.length; i++) {
             if (this.robots[i].species != "KILLER_ROBOT") {
                 continue;
             }
 
-            for (let id in candidate) {
+            for (let id in this.humanCandidate) {
                 if (this.robots[i].distance(this.players[id].x, this.players[id].y, this.robots[i].x, this.robots[i].y) > 600) {
                     continue;
                 }
@@ -54,6 +56,7 @@ class Robots {
         let pack = [];
 
         this.findTarget();
+        this.setTarget();
 
         for (let i = this.robots.length - 1; i >= 0; i--) {
             this.robots[i].update();
