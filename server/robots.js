@@ -44,6 +44,10 @@ class Robots {
             }
 
             for (let id in this.humanCandidate) {
+                if (this.players[id] == null) {
+                    continue;
+                }
+                
                 if (this.robots[i].distance(this.players[id].x, this.players[id].y, this.robots[i].x, this.robots[i].y) > 600) {
                     continue;
                 }
