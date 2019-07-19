@@ -31,9 +31,15 @@ class Robots {
         }
     }
 
+    distance(x1, y1, x2, y2) {
+        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    };
+
     findTarget() {
-        for (let id in this.players) {
-            this.humanCandidate[id] = true;
+        for (let i = 0; i < this.bullets.bullets.length; i++) {
+            if (this.players[this.bullets.bullets[i].id] != null) {
+                this.humanCandidate[this.bullets.bullets[i].id] = true;
+            }
         }
     }
 
@@ -52,6 +58,8 @@ class Robots {
                     continue;
                 }
                 this.robots[i].setTarget(id);
+
+                delete this.humanCandidate[id];
             }
         }
     }
