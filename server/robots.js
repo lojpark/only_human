@@ -60,19 +60,20 @@ class Robots {
                     if (this.robots[robotId].distance(this.players[targetId].x, this.players[targetId].y, this.robots[robotId].x, this.robots[robotId].y) > 600) {
                         continue;
                     }
+                    this.robots[robotId].setTarget(this.players[targetId]);
                 }
                 // Target is killer robot
                 else if (this.robots[targetId] != null) {
                     if (this.robots[robotId].distance(this.robots[targetId].x, this.robots[targetId].y, this.robots[robotId].x, this.robots[robotId].y) > 600) {
                         continue;
                     }
+                    this.robots[robotId].setTarget(this.robots[targetId]);
                 }
                 // Target is already dead
                 else {
                     continue;
                 }
 
-                this.robots[robotId].setTarget(targetId);
                 delete this.humanCandidate[targetId];
             }
         }
