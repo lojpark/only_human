@@ -55,6 +55,10 @@ class Robots {
             }
 
             for (let targetId in this.humanCandidate) {
+                // Target is myself
+                if (robotId == targetId) {
+                    continue;
+                }
                 // Target is player
                 if (this.players[targetId] != null) {
                     if (this.robots[robotId].distance(this.players[targetId].x, this.players[targetId].y, this.robots[robotId].x, this.robots[robotId].y) > 600) {
@@ -69,11 +73,7 @@ class Robots {
                     }
                     this.robots[robotId].setTarget(this.robots[targetId]);
                 }
-                // Target is already dead
-                else {
-                    continue;
-                }
-
+                
                 delete this.humanCandidate[targetId];
             }
         }

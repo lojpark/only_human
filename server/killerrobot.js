@@ -78,7 +78,7 @@ class KillerRobot extends Robot {
         
         super.ai();
 
-        if (Math.random() < 0.001) {
+        if (Math.random() < 0.002) {
             this.snipeTarget();
         }
     }
