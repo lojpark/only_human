@@ -23,16 +23,16 @@ class Human extends Creature {
 
     snipe() {
         // Accelerate
-        if (this.isUpPress && this.snipeVy > -12) this.snipeVy -= 0.75;
-        if (this.isDownPress && this.snipeVy < 12) this.snipeVy += 0.75;
-        if (this.isLeftPress && this.snipeVx > -12) this.snipeVx -= 0.75;
-        if (this.isRightPress && this.snipeVx < 12) this.snipeVx += 0.75;
+        if (this.isUpPress && this.snipeVy > -12) this.snipeVy -= 1.5;
+        if (this.isDownPress && this.snipeVy < 12) this.snipeVy += 1.5;
+        if (this.isLeftPress && this.snipeVx > -12) this.snipeVx -= 1.5;
+        if (this.isRightPress && this.snipeVx < 12) this.snipeVx += 1.5;
 
         // Friction
-        if (this.snipeVx < 0) this.snipeVx += 0.25;
-        if (this.snipeVx > 0) this.snipeVx -= 0.25;
-        if (this.snipeVy < 0) this.snipeVy += 0.25;
-        if (this.snipeVy > 0) this.snipeVy -= 0.25;
+        if (this.snipeVx < 0) this.snipeVx += 0.5;
+        if (this.snipeVx > 0) this.snipeVx -= 0.5;
+        if (this.snipeVy < 0) this.snipeVy += 0.5;
+        if (this.snipeVy > 0) this.snipeVy -= 0.5;
 
         // Inner range
         if (this.distance(this.x, this.y, this.snipeX + this.snipeVx, this.snipeY + this.snipeVy) < 600) {
