@@ -1,4 +1,4 @@
-let NAMES = ["Doge", "Newbie", "Go", "Park", "rg", "asdf", "Joe", "KILLER"];
+let NAMES = ["Doge", "Newbie", "Go", "Park", "rg", "asdf", "Joe", "KILLER", "Dude", "Carey", "Moo"];
 
 class LeaderBoard {
     constructor() {
