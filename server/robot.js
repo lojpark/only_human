@@ -11,6 +11,8 @@ class Robot extends Creature {
         this.timerLR = 0;
         this.timerUD = 0;
 
+        this.gene = [0.005, 0.1, 0.8, 0.5, 100, 100, 150, 0.33, 0.33, 150, 150, 150];
+
         this.fs = require('fs');
         this.writer = this.fs.createWriteStream('D:\\trace\\' + this.id.toString() + '.txt');
     }
@@ -53,11 +55,11 @@ class Robot extends Creature {
         // Jump
         if (this.state != "JUMP") {
             // Random jump
-            if (Math.random() < 0.005) {
+            if (Math.random() < this.gene[0]) {
                 this.isJumpPress = true;
             }
             // Jump before empty floor
-            if (Math.random() < 0.1) {
+            if (Math.random() < this.gene[1]) {
                 if (this.isLeftPress) {
                     let x = this.map.modular(Math.floor(this.x / 30), "COL");
                     let y = this.map.modular(Math.floor((this.y + this.h / 2) / 30), "ROW");
@@ -80,24 +82,35 @@ class Robot extends Creature {
 
         if (this.timerUD <= 0) {
             let rv = Math.random();
-            if (rv <= 0.8) {
+            if (rv <= this.gene[2]) {
                 this.actionUD = 0;
-                this.timerUD = Math.floor(Math.random() * 100);
+                this.timerUD = Math.floor(this.gene[4] + Math.random() * 5 - 10);
             }
-            else if (rv <= 0.9) {
+            else if (rv <= this.gene[2] + (1.0 - this.gene[2]) * this.gene[3]) {
                 this.actionUD = 1;
-                this.timerUD = Math.floor(Math.random() * 100);
+                this.timerUD = Math.floor(this.gene[5] + Math.random() * 5 - 10);
             }
             else {
                 this.actionUD = 2;
-                this.timerUD = Math.floor(Math.random() * 150);
+                this.timerUD = Math.floor(this.gene[6] + Math.random() * 5 - 10);
             }
 
             this.isUpPress = this.isDownPress = false;
         }
         if (this.timerLR <= 0) {
-            this.timerLR = Math.floor(Math.random() * 150);
-            this.actionLR = Math.floor(Math.random() * 3);
+            let rv = Math.random();
+            if (rv <= this.gene[7]) {
+                this.actionLR = 0;
+                this.timerLR = Math.floor(this.gene[9] + Math.random() * 5 - 10);
+            }
+            else if (rv <= this.gene[7] + (1.0 - this.gene[7]) * this.gene[8]) {
+                this.actionLR = 1;
+                this.timerLR = Math.floor(this.gene[10] + Math.random() * 5 - 10);
+            }
+            else {
+                this.actionLR = 2;
+                this.timerLR = Math.floor(this.gene[11] + Math.random() * 5 - 10);
+            }
 
             this.isLeftPress = this.isRightPress = false;
         }
@@ -105,7 +118,7 @@ class Robot extends Creature {
 
     update() {
         this.ai();
-        this.record();
+        // this.record();
 
         super.update();
     }
