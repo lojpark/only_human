@@ -33,6 +33,23 @@ class Creature {
         this.isRightPress = false;
         this.isJumpPress = false;
         this.isSnipe = false;
+
+        this.fs = require('fs');
+        this.writer = this.fs.createWriteStream('D:\\trace\\' + this.id.toString() + '.txt');
+    }
+
+    record() {
+        let state = 0;
+        state += this.isJumpPress;
+        state <<= 1;
+        state += this.isLeftPress;
+        state <<= 1;
+        state += this.isRightPress;
+        state <<= 1;
+        state += this.isUpPress;
+        state <<= 1;
+        state += this.isDownPress;
+        this.writer.write(state.toString() + ',');
     }
 
     jump() {
@@ -258,6 +275,11 @@ class Creature {
 
         // Check obstacle
         this.checkObstacle();
+
+        // Record the trace information
+        if (this.species == "HUMAN") {
+            this.record();
+        }
     }
 }
 

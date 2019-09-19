@@ -12,23 +12,6 @@ class Robot extends Creature {
         this.timerUD = 0;
 
         this.gene = [0.005, 0.1, 0.8, 0.5, 100, 100, 150, 0.33, 0.33, 150, 150, 150];
-
-        this.fs = require('fs');
-        this.writer = this.fs.createWriteStream('D:\\trace\\' + this.id.toString() + '.txt');
-    }
-
-    record() {
-        let state = 0;
-        state += this.isJumpPress;
-        state <<= 1;
-        state += this.isLeftPress;
-        state <<= 1;
-        state += this.isRightPress;
-        state <<= 1;
-        state += this.isUpPress;
-        state <<= 1;
-        state += this.isDownPress;
-        this.writer.write(state.toString() + ',');
     }
 
     ai() {
@@ -118,7 +101,6 @@ class Robot extends Creature {
 
     update() {
         this.ai();
-        // this.record();
 
         super.update();
     }
