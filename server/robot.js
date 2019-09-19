@@ -10,6 +10,23 @@ class Robot extends Creature {
         this.actionUD = 0;
         this.timerLR = 0;
         this.timerUD = 0;
+
+        this.fs = require('fs');
+        this.writer = this.fs.createWriteStream('D:\\trace\\' + this.id.toString() + '.txt');
+    }
+
+    record() {
+        let state = 0;
+        state += this.isJumpPress;
+        state <<= 1;
+        state += this.isLeftPress;
+        state <<= 1;
+        state += this.isRightPress;
+        state <<= 1;
+        state += this.isUpPress;
+        state <<= 1;
+        state += this.isDownPress;
+        this.writer.write(state.toString() + ',');
     }
 
     ai() {
@@ -88,6 +105,7 @@ class Robot extends Creature {
 
     update() {
         this.ai();
+        this.record();
 
         super.update();
     }
