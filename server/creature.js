@@ -288,7 +288,7 @@ class Creature {
 
         // Record the trace information
         if (this.species != "HUMAN") {
-            this.record();
+            //this.record();
         }
     }
 }
