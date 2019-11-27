@@ -1,8 +1,8 @@
 const Robot = require ('../server/robot.js');
 
 class KillerRobot extends Robot {
-    constructor(x, y, type, players, bullets, leaderboard, map) {
-        super(x, y, type, bullets, leaderboard, map);
+    constructor(x, y, type, players, bullets, leaderboard, map, gene) {
+        super(x, y, type, bullets, leaderboard, map, gene);
 
         this.players = players;
 

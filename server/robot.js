@@ -1,7 +1,7 @@
 const Creature = require ('../server/creature.js');
 
 class Robot extends Creature {
-    constructor(x, y, type, bullets, leaderboard, map) {
+    constructor(x, y, type, bullets, leaderboard, map, gene) {
         super(x, y, type, bullets, leaderboard, map);
 
         this.species = "ROBOT";
@@ -11,7 +11,7 @@ class Robot extends Creature {
         this.timerLR = 0;
         this.timerUD = 0;
 
-        this.gene = [0.005, 0.1, 0.8, 0.5, 100, 100, 150, 0.33, 0.33, 150, 150, 150];
+        this.gene = gene;
     }
 
     ai() {

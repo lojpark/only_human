@@ -35,10 +35,20 @@ class Creature {
         this.isSnipe = false;
 
         this.fs = require('fs');
-        this.writer = this.fs.createWriteStream('D:\\trace\\' + this.id.toString() + '.txt');
+        this.writer = null;
     }
 
     record() {
+        if (this.writer == null) {
+            this.writer = this.fs.createWriteStream('D:\\trace\\' + this.id.toString() + '.txt');
+            if (this.species != "HUMAN") {
+                this.writer.write(this.gene[0].toString());
+                for (let i = 1; i < 12; i++) {
+                    this.writer.write(',' + this.gene[i].toString());
+                }
+                this.writer.write('|');
+            }
+        }
         let state = 0;
         state += this.isJumpPress;
         state <<= 1;
@@ -277,7 +287,7 @@ class Creature {
         this.checkObstacle();
 
         // Record the trace information
-        if (this.species == "HUMAN") {
+        if (this.species != "HUMAN") {
             this.record();
         }
     }
